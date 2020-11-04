@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet author="elder.dias" id="20201104092400.1">
+
+        <createTable tableName="operations_types">
+
+            <column name="operation_type_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="description" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+        <createSequence sequenceName="operations_types_seq" incrementBy="1" startValue="1"/>
+
+    </changeSet>
+
+    <changeSet author="elder.dias" id="20201104092400.2">
+
+        <insert tableName="operations_types">
+            <column name="operation_type_id" valueSequenceNext="operations_types_seq"/>
+            <column name="description" value="COMPRA_VISTA"/>
+        </insert>
+
+        <insert tableName="operations_types">
+            <column name="operation_type_id" valueSequenceNext="operations_types_seq"/>
+            <column name="description" value="COMPRA_PARCELADA"/>
+        </insert>
+
+        <insert tableName="operations_types">
+            <column name="operation_type_id" valueSequenceNext="operations_types_seq"/>
+            <column name="description" value="SAQUE"/>
+        </insert>
+
+        <insert tableName="operations_types">
+            <column name="operation_type_id" valueSequenceNext="operations_types_seq"/>
+            <column name="description" value="PAGAMENTO"/>
+        </insert>
+
+    </changeSet>
+
+</databaseChangeLog>

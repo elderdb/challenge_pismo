@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet author="elder.dias" id="20201103144500.1">
+
+        <createTable tableName="accounts">
+
+            <column name="account_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="document_number" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+        <createSequence sequenceName="accounts_seq" incrementBy="1" startValue="1"/>
+
+    </changeSet>
+
+</databaseChangeLog>

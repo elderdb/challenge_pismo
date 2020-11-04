@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet author="elder.dias" id="20201104120700.1">
+
+        <createTable tableName="transactions">
+
+            <column name="transaction_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="account_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_transaction_account_id"
+                             references="accounts(account_id)"/>
+            </column>
+
+            <column name="operation_type_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_transaction_operation_type_id"
+                             references="operations_types(operation_type_id)"/>
+            </column>
+
+            <column name="amount" type="DECIMAL">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="event_date" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+        <createSequence sequenceName="transaction_seq" incrementBy="1" startValue="1"/>
+
+    </changeSet>
+
+</databaseChangeLog>
