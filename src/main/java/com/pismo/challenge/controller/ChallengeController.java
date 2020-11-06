@@ -5,8 +5,7 @@ import com.pismo.challenge.domain.Transaction;
 import com.pismo.challenge.dto.TransactionDTO;
 import com.pismo.challenge.service.AccountService;
 import com.pismo.challenge.service.TransactionService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.MediaType;
@@ -17,9 +16,8 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/v1/onboard")
+@Api(tags = {"Onboard"})
 public class ChallengeController {
-
-  private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
   private final AccountService accountService;
   private final TransactionService transactionService;
