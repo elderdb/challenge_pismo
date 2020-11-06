@@ -7,7 +7,8 @@ public enum ErrorMessageEnum {
   PAYLOAD_CANNOT_BE_NULL("003 - Payload can not be null."),
   ACCOUNT_NOT_FOUND("004 - Account not found."),
   OPERATION_TYPE_IS_INVALID("005 - Operation Type is invalid."),
-  AMOUNT_MUST_BE_GREATER_THAN_ZERO("006 - Amount must be greater than zero.");
+  AMOUNT_MUST_BE_GREATER_THAN_ZERO("006 - Amount must be greater than zero."),
+  INPUT_OBJECT_ERROR_PARSE("007 - Can not parse payload");
 
   private final String message;
 

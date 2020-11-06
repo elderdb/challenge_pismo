@@ -35,6 +35,23 @@ public class TransactionService {
     this.transactionRepository = transactionRepository;
   }
 
+  private static Double getAmount(final OperationType operationType, final Double amount) {
+
+    final List<OperationTypeDescription> withdrawEnums = Arrays.asList(COMPRA_VISTA, COMPRA_PARCELADA, SAQUE);
+    final List<OperationTypeDescription> depositEnums = Collections.singletonList(PAGAMENTO);
+
+    if (withdrawEnums.contains(operationType.getDescription())) {
+      return -amount;
+    }
+
+    if (depositEnums.contains(operationType.getDescription())) {
+      return amount;
+    }
+
+    throw new BadRequestException(OPERATION_TYPE_IS_INVALID.getMessage());
+
+  }
+
   public Optional<Transaction> create(final TransactionDTO transactionDTO) {
 
     if (Objects.isNull(transactionDTO)) {
@@ -53,23 +70,6 @@ public class TransactionService {
 
     return Optional.of(transactionRepository.saveAndFlush(Transaction.create(account, operationType,
         getAmount(operationType, transactionDTO.getAmount()))));
-
-  }
-
-  private Double getAmount(final OperationType operationType, final Double amount) {
-
-    final List<OperationTypeDescription> withdrawEnums = Arrays.asList(COMPRA_VISTA, COMPRA_PARCELADA, SAQUE);
-    final List<OperationTypeDescription> depositEnums = Collections.singletonList(PAGAMENTO);
-
-    if (withdrawEnums.contains(operationType.getDescription())) {
-      return -amount;
-    }
-
-    if (depositEnums.contains(operationType.getDescription())) {
-      return amount;
-    }
-
-    throw new BadRequestException(OPERATION_TYPE_IS_INVALID.getMessage());
 
   }
 

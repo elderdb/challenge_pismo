@@ -13,15 +13,15 @@ import javax.persistence.*;
 @Table(name = "transactions", schema = "public")
 public class Transaction {
 
-  @JsonSerialize(using = CustomDateSerializer.class)
-  @JsonDeserialize(using = CustomDateDeserializer.class)
-  @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-  private final DateTime eventDate = DateTime.now();
-
   @Id
   @SequenceGenerator(name = "transaction_generator", sequenceName = "transaction_seq", allocationSize = 1)
   @GeneratedValue(strategy = GenerationType.AUTO, generator = "transaction_generator")
   private Long transactionId;
+
+  @JsonSerialize(using = CustomDateSerializer.class)
+  @JsonDeserialize(using = CustomDateDeserializer.class)
+  @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+  private final DateTime eventDate = DateTime.now();
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "account_id")
