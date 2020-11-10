@@ -23,4 +23,16 @@ public class TransactionDTO {
   public Double getAmount() {
     return amount;
   }
+
+  public void setAccountId(Long accountId) {
+    this.accountId = accountId;
+  }
+
+  public void setOperationTypeId(int operationTypeId) {
+    this.operationTypeId = operationTypeId;
+  }
+
+  public void setAmount(Double amount) {
+    this.amount = amount;
+  }
 }

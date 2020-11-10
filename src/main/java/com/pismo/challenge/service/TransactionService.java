@@ -70,21 +70,33 @@ public class TransactionService {
     if (withdrawEnums.contains(operationType.getDescription())) {
 
       if (hasAvailableCreditLimit(account, transactionDTO.getAmount())) {
-        account.setAvailableCreditLimit(account.getAvailableCreditLimit() - transactionDTO.getAmount());
+        doTransactionValue(account, account.getAvailableCreditLimit() - transactionDTO.getAmount());
       } else {
         throw new BadRequestException(NO_AVAILABLE_CREDIT_LIMIT.getMessage());
       }
 
     }
 
-    if (depositEnums.contains(operationType.getDescription())) {
-      account.setAvailableCreditLimit(account.getAvailableCreditLimit() + transactionDTO.getAmount());
-    }
+    isPaymentTransaction(transactionDTO, account, operationType);
 
     accountRepository.saveAndFlush(account);
 
     return Optional.of(transactionRepository.saveAndFlush(Transaction.create(account, operationType,
         getAmount(operationType, transactionDTO.getAmount()))));
+
+  }
+
+  private void doTransactionValue(final Account account, final double value) {
+    account.setAvailableCreditLimit(value);
+  }
+
+  private void isPaymentTransaction(final TransactionDTO transactionDTO,
+                                    final Account account,
+                                    final OperationType operationType) {
+
+    if (depositEnums.contains(operationType.getDescription())) {
+      doTransactionValue(account, account.getAvailableCreditLimit() + transactionDTO.getAmount());
+    }
 
   }
 
