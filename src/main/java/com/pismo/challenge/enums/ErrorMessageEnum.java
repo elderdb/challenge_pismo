@@ -8,7 +8,8 @@ public enum ErrorMessageEnum {
   ACCOUNT_NOT_FOUND("004 - Account not found."),
   OPERATION_TYPE_IS_INVALID("005 - Operation Type is invalid."),
   AMOUNT_MUST_BE_GREATER_THAN_ZERO("006 - Amount must be greater than zero."),
-  INPUT_OBJECT_ERROR_PARSE("007 - Can not parse payload");
+  INPUT_OBJECT_ERROR_PARSE("007 - Can not parse payload"),
+  NO_AVAILABLE_CREDIT_LIMIT("008 - No available credit limit");
 
   private final String message;
 

@@ -21,6 +21,8 @@ import static com.pismo.challenge.enums.OperationTypeDescription.*;
 @Service
 public class TransactionService {
 
+  static final List<OperationTypeDescription> withdrawEnums = Arrays.asList(COMPRA_VISTA, COMPRA_PARCELADA, SAQUE);
+  static final List<OperationTypeDescription> depositEnums = Collections.singletonList(PAGAMENTO);
   private final AccountRepository accountRepository;
   private final OperationTypeRepository operationTypeRepository;
   private final TransactionRepository transactionRepository;
@@ -36,9 +38,6 @@ public class TransactionService {
   }
 
   private static Double getAmount(final OperationType operationType, final Double amount) {
-
-    final List<OperationTypeDescription> withdrawEnums = Arrays.asList(COMPRA_VISTA, COMPRA_PARCELADA, SAQUE);
-    final List<OperationTypeDescription> depositEnums = Collections.singletonList(PAGAMENTO);
 
     if (withdrawEnums.contains(operationType.getDescription())) {
       return -amount;
@@ -68,8 +67,31 @@ public class TransactionService {
     final OperationType operationType = operationTypeRepository.findById(transactionDTO.getOperationTypeId())
         .orElseThrow(() -> new BadRequestException(OPERATION_TYPE_IS_INVALID.getMessage()));
 
+    if (withdrawEnums.contains(operationType.getDescription())) {
+
+      if (hasAvailableCreditLimit(account, transactionDTO.getAmount())) {
+        account.setAvailableCreditLimit(account.getAvailableCreditLimit() - transactionDTO.getAmount());
+      } else {
+        throw new BadRequestException(NO_AVAILABLE_CREDIT_LIMIT.getMessage());
+      }
+
+    }
+
+    if (depositEnums.contains(operationType.getDescription())) {
+      account.setAvailableCreditLimit(account.getAvailableCreditLimit() + transactionDTO.getAmount());
+    }
+
+    accountRepository.saveAndFlush(account);
+
     return Optional.of(transactionRepository.saveAndFlush(Transaction.create(account, operationType,
         getAmount(operationType, transactionDTO.getAmount()))));
+
+  }
+
+  private boolean hasAvailableCreditLimit(final Account account,
+                                          final Double amount) {
+
+    return account.getAvailableCreditLimit() - amount >= 0;
 
   }
 

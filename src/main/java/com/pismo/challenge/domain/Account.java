@@ -13,6 +13,8 @@ public class Account {
 
   private Long documentNumber;
 
+  private Double availableCreditLimit = 0.0;
+
   public static Account create(final Long documentNumber) {
 
     final Account account = new Account();
@@ -39,13 +41,25 @@ public class Account {
     this.documentNumber = documentNumber;
   }
 
+  public Double getAvailableCreditLimit() {
+    return availableCreditLimit;
+  }
+
+  public void setAvailableCreditLimit(Double availableCreditLimit) {
+    this.availableCreditLimit = availableCreditLimit;
+  }
+
+  public Account from(final Account account) {
+    return this;
+  }
+
   @Override
   public String toString() {
     final StringBuilder sb = new StringBuilder("Account{");
     sb.append("accountId=").append(accountId);
     sb.append(", documentNumber=").append(documentNumber);
+    sb.append(", availableCreditLimit=").append(availableCreditLimit);
     sb.append('}');
     return sb.toString();
   }
-
 }

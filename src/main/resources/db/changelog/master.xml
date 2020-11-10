@@ -7,5 +7,6 @@
     <include file="/db/changelog/changes/changelog-create-table-account.xml"/>
     <include file="/db/changelog/changes/changelog-create-table-operation-type.xml"/>
     <include file="/db/changelog/changes/changelog-create-table-transactions.xml"/>
+    <include file="/db/changelog/changes/changelog-alter-table-account.xml"/>
 
 </databaseChangeLog>
